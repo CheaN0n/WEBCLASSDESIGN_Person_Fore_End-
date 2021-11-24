@@ -16,7 +16,7 @@
         </section>
         <section class="right">
             <section class="upcontent">
-                <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.stuinfo.username}}</a></div>
+                <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.username}}</a></div>
                 <a href="#" class="changekey" @click="tochangepassword">密码修改<div class="iconfont icon-3denglumima"></div> </a>
                 <a href="/" class="exit">退出<div class="iconfont icon-Enter-2"></div></a>
             </section>
@@ -105,14 +105,10 @@ export default {
             timeandplace:'',
             tips:''
         },
-        stuinfo:{
-            username: '',
-            password: '',
-        },
+        username: '',
         studetailinfo: {
             username:'',
             name:'',
-            password:'',
             academy:'',
             grade:'',
         }
@@ -124,7 +120,7 @@ export default {
           _this.$router.push({
               path:'/stuhomepage',
               query:{
-                  ruleForm: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -133,7 +129,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -142,7 +138,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo?#changePassword',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -151,7 +147,7 @@ export default {
           _this.$router.push({
               path:'/selectclass',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -160,7 +156,7 @@ export default {
           _this.$router.push({
               path:'/gradecheck',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -169,7 +165,7 @@ export default {
           _this.$router.push({
               path:'/myselect',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -181,7 +177,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-           _this.ruleForm.username = _this.stuinfo.username;
+           _this.ruleForm.username = _this.username;
           _this.ruleForm.coursenumber = _row.coursenumber;
           _this.ruleForm.stuname = _this.studetailinfo.name;
           _this.ruleForm.name = _row.name;
@@ -199,24 +195,24 @@ export default {
             }else if(resp3.data == 'repeat'){
                 _this.$message.error('选课重复，请重新检查！');
             }else if(resp3.data =='conflict'){
-                _this.$message.error('选课时间冲突，请重新检查！');        
+                _this.$message.error('选课时间冲突，请重新检查！');
             }
           })
             }).catch(() => {
             this.$message({
                 type: 'info',
                 message: '已取消选课！'
-            });          
+            });
             });
   }
   },
   created (){
         const _this=this
-        _this.stuinfo = JSON.parse(_this.$route.query.stuinfo)
+        _this.username = JSON.parse(_this.$route.query.username)
         axios.get ('http://localhost:8181/classlist/findAll').then(function(resp){
             _this.classlist=resp.data
         });
-        axios.get ('http://localhost:8181/stuuser/details/'+_this.stuinfo.username).then(function(resp2){
+        axios.get ('http://localhost:8181/stuuser/details/'+_this.username).then(function(resp2){
              _this.studetailinfo=resp2.data
         })
       },

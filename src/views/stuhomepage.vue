@@ -16,7 +16,7 @@
     </section>
     <section class="right">
         <section class="upcontent">
-            <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.stuinfo.username}}</a></div>
+            <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.username}}</a></div>
             <a href="#" class="changekey" @click="tochangepassword">密码修改<div class="iconfont icon-3denglumima"></div> </a>
             <a href="/" class="exit">退出<div class="iconfont icon-Enter-2"></div></a>
         </section>
@@ -90,16 +90,13 @@ export default {
     return {
         chart:null,
         classDatas:[],
-        stuinfo: {
-          username:'',
-          password:'',
-        },
+        username:'',
     }
   },
   created (){
-        this.stuinfo = JSON.parse(this.$route.query.ruleForm) 
+        this.username = JSON.parse(this.$route.query.username)
         const _this = this;
-        axios.get('http://localhost:8181/grade/checkgrade/'+_this.stuinfo.username).then(function(resp){
+        axios.get('http://localhost:8181/grade/checkgrade/'+_this.username).then(function(resp){
             for(var i in resp.data){
                 _this.classDatas[i] = (resp.data[i].timeandplace).split('/');
                 _this.classDatas[i][2]+='\n'+resp.data[i].name+'\n';
@@ -123,7 +120,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                  username: JSON.stringify(this.username)
               }
           })
       },
@@ -132,7 +129,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo?#changePassword',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -141,7 +138,7 @@ export default {
           _this.$router.push({
               path:'/selectclass',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -150,7 +147,7 @@ export default {
           _this.$router.push({
               path:'/gradecheck',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -162,7 +159,7 @@ export default {
             title: {
                 text: '课程表',
                 subtext: '数据来自选课平台',
- 
+
             },
             legend: {
                 top: 20,
@@ -171,7 +168,7 @@ export default {
                 textStyle: {
                     color: '#6495ED'
                 }
- 
+
             },
             grid: {},
             toolbox: {
@@ -196,9 +193,9 @@ export default {
                     interval: 0,
                     rotate: 30
                 }
- 
+
             },
- 
+
             yAxis: {
                 type: 'category',
                 boundaryGap: false,
@@ -239,11 +236,11 @@ export default {
                 },
                 coordinateSystem: 'cartesian2d',
                 data: _this.classDatas
- 
-            }, 
+
+            },
             ]
         });
-        
+
       },
       infochart() {
             this.chart = echarts.init(document.getElementById("graph2"))
@@ -401,7 +398,7 @@ export default {
                     ]
                 });
             }
-      
+
   }
 }
 </script>

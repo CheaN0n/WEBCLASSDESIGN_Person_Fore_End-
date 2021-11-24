@@ -16,7 +16,7 @@
     </section>
     <section class="right">
         <section class="upcontent">
-            <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.stuinfo.username}}</a></div>
+            <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.username}}</a></div>
             <a href="#" class="changekey" @click="tochangepassword">密码修改<div class="iconfont icon-3denglumima"></div> </a>
             <a href="/" class="exit">退出<div class="iconfont icon-Enter-2"></div></a>
         </section>
@@ -52,20 +52,17 @@
 <script>
 import * as echarts from 'echarts';
 export default {
-    
+
   name: 'stuhomepage',
   data () {
     return {
-        stuinfo:{
-            username: '',
-            password: '',
-        },
+        username: '',
         stuGrade:[],
         classnames:[],
         classgrades:[],
         averagegrades:[]
     }
-    
+
   },
   methods:{
     show(){
@@ -76,7 +73,7 @@ export default {
           _this.$router.push({
               path:'/stuhomepage',
               query:{
-                  ruleForm: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -85,7 +82,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -94,7 +91,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo?#changePassword',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -103,7 +100,7 @@ export default {
           _this.$router.push({
               path:'/selectclass',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -112,12 +109,12 @@ export default {
           _this.$router.push({
               path:'/gradecheck',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
-      gradechart: function () {   
-            const _this = this;      
+      gradechart: function () {
+            const _this = this;
             this.chart = echarts.init(document.getElementById("main"))
             this.chart.clear()
             var myChart = this.chart
@@ -192,11 +189,11 @@ export default {
   },
   created(){
       const _this=this
-        _this.stuinfo = JSON.parse(_this.$route.query.stuinfo)
-        axios.get('http://localhost:8181/grade/getave/'+_this.stuinfo.username).then(function(resp0){
+        _this.username = JSON.parse(_this.$route.query.username)
+        axios.get('http://localhost:8181/grade/getave/'+_this.username).then(function(resp0){
           _this.averagegrades = resp0.data;
         })
-        axios.get('http://localhost:8181/grade/checkgrade/'+_this.stuinfo.username).then(function(resp){
+        axios.get('http://localhost:8181/grade/checkgrade/'+_this.username).then(function(resp){
             _this.stuGrade=resp.data;
             for(var i in _this.stuGrade){
               _this.classnames[i] = _this.stuGrade[i].name;
@@ -207,7 +204,7 @@ export default {
   },
   mounted(){
   }
-  
+
 }
 </script>
 <style>

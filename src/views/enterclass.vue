@@ -1,7 +1,7 @@
 <template>
 <body>
   <section class="upcontent"><div class="title"><img src="../assets/logo2.jpg">教师管理系统</div><a href="tealogin" class="exit">退出</a></section>
-  
+
   <el-container style=" border: 1px solid #eee">
   <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
     <el-menu :default-openeds="['1']" :default-active= "'1-1'">
@@ -15,7 +15,7 @@
       </el-submenu>
     </el-menu>
   </el-aside>
-  
+
   <el-container>
       <div class="addmenu" v-show="isshowaddmenu">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
@@ -116,7 +116,7 @@
     color: #333;
     line-height: 60px;
   }
-  
+
   .el-aside {
     color: #333;
   }
@@ -178,14 +178,11 @@
       return{
       isshowaddmenu:false,
       isshoweditmenu:false,
-      teainfo: {
-          username:'',
-          password:'',
-      },
+        username:'',
       ruleForm: {
           coursenumber: '',
-          name: '', 
-          ddl:'', 
+          name: '',
+          ddl:'',
           point: '',
           teacher: '',
           timeandplace: '',
@@ -193,7 +190,7 @@
         },
         ruleForm2: {
           coursenumber: '',
-          name: '',  
+          name: '',
           ddl:'',
           point: '',
           teacher: '',
@@ -231,7 +228,7 @@
     },
     created(){
       const _this=this
-      _this.teainfo = JSON.parse(_this.$route.query.ruleForm) 
+      _this.username = JSON.parse(_this.$route.query.username)
         axios.get ('http://localhost:8181/classlist/findAll').then(function(resp){
             _this.classlist=resp.data
         })
@@ -241,7 +238,7 @@
          this.$router.push({
            path:'/entergrade',
            query: {
-             teainfo:JSON.stringify(this.teainfo)
+             username:JSON.stringify(this.username)
            }
          });
       },

@@ -16,7 +16,7 @@
     </section>
     <section class="right">
         <section class="upcontent">
-            <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.stuinfo.username}}</a></div>
+            <div class="wel">欢迎用户 <a href="#" @click="toinfo">{{this.username}}</a></div>
             <a href="#" class="changekey" @click="tochangepassword">密码修改<div class="iconfont icon-3denglumima"></div> </a>
             <a href="/" class="exit">退出<div class="iconfont icon-Enter-2"></div></a>
         </section>
@@ -65,10 +65,7 @@ export default {
     return {
      myclasslist:[
      ],
-     stuinfo:{
-            username: '',
-            password: '',
-        }
+      username: '',
     }
   },
    methods:{
@@ -77,7 +74,7 @@ export default {
           _this.$router.push({
               path:'/stuhomepage',
               query:{
-                  ruleForm: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -86,7 +83,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -95,7 +92,7 @@ export default {
           _this.$router.push({
               path:'/stuinfo?#changePassword',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -104,7 +101,7 @@ export default {
           _this.$router.push({
               path:'/selectclass',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -113,7 +110,7 @@ export default {
           _this.$router.push({
               path:'/gradecheck',
               query:{
-                  stuinfo: JSON.stringify(this.stuinfo)
+                username: JSON.stringify(this.username)
               }
           })
       },
@@ -129,22 +126,22 @@ export default {
                       message: '退选成功',
                       type: 'success'
                     });
-              _this.$router.go(0);      
+              _this.$router.go(0);
            })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消退选'
-          });          
+          });
         });
-          
+
 
       }
   },
   created (){
         const _this=this
-        _this.stuinfo = JSON.parse(_this.$route.query.stuinfo);
-        axios.get('http://localhost:8181/grade/find/'+_this.stuinfo.username).then(function(resp){
+        _this.username = JSON.parse(_this.$route.query.username);
+        axios.get('http://localhost:8181/grade/find/'+_this.username).then(function(resp){
             _this.myclasslist=resp.data;
         })
       },

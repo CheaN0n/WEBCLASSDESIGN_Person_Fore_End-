@@ -14,7 +14,7 @@
       </el-submenu>
     </el-menu>
   </el-aside>
-  
+
   <el-container>
     <div class="entergrademenu" v-show="isshowgrade">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
@@ -55,7 +55,7 @@
     color: #333;
     line-height: 60px;
   }
-  
+
   .el-aside {
     color: #333;
   }
@@ -105,10 +105,7 @@ const isNum = (rule, value, callback) => {
   export default {
     data() {
       return{
-      teainfo: {
-          username:'',
-          password:'',
-      },
+      username:'',
       ruleForm:{
         id:'',
         username:'',
@@ -135,7 +132,7 @@ const isNum = (rule, value, callback) => {
     },
     created () {
       const _this=this
-      _this.teainfo = JSON.parse(_this.$route.query.teainfo)
+      _this.username = JSON.parse(_this.$route.query.username)
         axios.get ('http://localhost:8181/classlist/findAll').then(function(resp2){
             _this.classlist=resp2.data
         })
@@ -146,7 +143,7 @@ const isNum = (rule, value, callback) => {
         this.$router.push({
           path: '/enterclass',
           query: {
-            ruleForm:JSON.stringify(this.teainfo)
+            username:JSON.stringify(this.username)
           }
         });
       },
